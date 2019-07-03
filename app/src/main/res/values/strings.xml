@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">ThirtyForAndroid</string>
+    <string name="thirty">Thirty</string>
+    <string name="for_android">for Android</string>
+    <string name="start_button">Start</string>
+    <string name="title_activity_game">GameActivity</string>
+
+    <string name="reroll">Reroll selected dice</string>
+
+
+    <string name="dice_one">Dice One</string>
+    <string name="dice_two">Dice Two</string>
+    <string name="dice_three">Dice Three</string>
+    <string name="dice_four">Dice Four</string>
+    <string name="dice_five">Dice Five</string>
+    <string name="dice_six">Dice Six</string>
+</resources>

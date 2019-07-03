@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/diceOneButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="#FFFFFF"
+            android:contentDescription="@string/dice_one"
+            android:src="@drawable/white1" />
+
+        <ImageButton
+            android:id="@+id/diceTwoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="#FFFFFF"
+            android:contentDescription="@string/dice_one"
+            android:src="@drawable/white1" />
+
+        <ImageButton
+            android:id="@+id/diceThreeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="#FFFFFF"
+            android:contentDescription="@string/dice_one"
+            android:src="@drawable/white1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/diceFourButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="#FFFFFF"
+            android:contentDescription="@string/dice_one"
+            android:src="@drawable/white1" />
+
+        <ImageButton
+            android:id="@+id/diceFiveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="#FFFFFF"
+            android:contentDescription="@string/dice_one"
+            android:src="@drawable/white1" />
+
+        <ImageButton
+            android:id="@+id/diceSixButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="#FFFFFF"
+            android:contentDescription="@string/dice_one"
+            android:src="@drawable/white1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/reroll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reroll" />
+
+    </LinearLayout>
+
+</LinearLayout>
