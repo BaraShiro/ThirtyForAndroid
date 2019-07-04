@@ -1,7 +1,5 @@
 package moe.barashiro.thirtyforandroid;
 
-import android.util.Log;
-
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,22 +7,22 @@ import java.util.List;
 public class Game {
 
     private D6[] mDices;
-    private boolean[] mScoreMethodsUsed;
-    private int[] mScoreMethods;
+    private boolean[] mScoreRulesUsed;
+    private int[] mScoreRules;
     private int mRerollsLeft;
     private int mRound;
     private boolean mGameOver;
-    private int[] mScoresPerMethod;
+    private int[] mScoresPerRule;
     private int[] mScoresPerRound;
 
     public Game(){
         mDices = new D6[] {new D6(), new D6(), new D6(), new D6(), new D6(), new D6()};
         rerollAllDices();
-        mScoreMethodsUsed = new boolean[] {false, false, false, false, false, false, false, false, false, false};
-        mScoreMethods = new int[] {3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+        mScoreRulesUsed = new boolean[] {false, false, false, false, false, false, false, false, false, false};
+        mScoreRules = new int[] {3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
         mRerollsLeft = 2;
         mRound = 1;
-        mScoresPerMethod = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        mScoresPerRule = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         mScoresPerRound = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     }
 
@@ -40,8 +38,8 @@ public class Game {
         return mDices[dice].getValue();
     }
 
-    public boolean[] getScoreMethodsUsed(){
-        return mScoreMethodsUsed;
+    public boolean[] getScoreRulesUsed(){
+        return mScoreRulesUsed;
     }
 
     public int getRerollsLeft() {
@@ -56,8 +54,8 @@ public class Game {
         return mGameOver;
     }
 
-    public int[] getScoresPerMethod() {
-        return mScoresPerMethod;
+    public int[] getScoresPerRule() {
+        return mScoresPerRule;
     }
 
     public int[] getScoresPerRound() {
@@ -100,15 +98,15 @@ public class Game {
         }
     }
 
-    public int calculateScore(int methodNumber){
+    public int calculateScore(int ruleNumber){
         List<Integer> diceValueList = new LinkedList<>();
 
         for (D6 dice : mDices){
             diceValueList.add(dice.getValue());
         }
-        int score = computeScore(mScoreMethods[methodNumber], diceValueList);
-        mScoreMethodsUsed[methodNumber] = true;
-        mScoresPerMethod[methodNumber] = score;
+        int score = computeScore(mScoreRules[ruleNumber], diceValueList);
+        mScoreRulesUsed[ruleNumber] = true;
+        mScoresPerRule[ruleNumber] = score;
         mScoresPerRound[mRound - 1] = score;
         return score;
     }

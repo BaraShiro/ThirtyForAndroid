@@ -22,7 +22,7 @@ public class GameActivity extends AppCompatActivity {
 
     private SparseIntArray mWhiteDices;
     private SparseIntArray mRedDices;
-    private Map<String, Integer> mMethodNames;
+    private Map<String, Integer> mRuleNames;
     private boolean[] mDiceMarkedForReroll;
     private Game mGame;
 
@@ -30,7 +30,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView mRerollText;
     private Button mRerollButton;
     private TextView mScoreText;
-    private Spinner mMethodSpinner;
+    private Spinner mRuleSpinner;
     private Button mCalculateButton;
     private TextView mRoundText;
     private Button mRoundButton;
@@ -61,10 +61,10 @@ public class GameActivity extends AppCompatActivity {
         mRedDices.put(5, R.drawable.red5);
         mRedDices.put(6, R.drawable.red6);
 
-        mMethodNames = new HashMap<>();
-        String[] values = getResources().getStringArray(R.array.methodArray);
+        mRuleNames = new HashMap<>();
+        String[] values = getResources().getStringArray(R.array.rule_array);
         for(int i = 0; i < 10; i++){
-            mMethodNames.put(values[i], i);
+            mRuleNames.put(values[i], i);
         }
 
         mGame = new Game();
@@ -73,7 +73,7 @@ public class GameActivity extends AppCompatActivity {
         mRerollButton = (Button) findViewById(R.id.rerollButton);
         mRerollText = (TextView) findViewById(R.id.rerollText);
         mScoreText = (TextView) findViewById(R.id.scoreText);
-        mMethodSpinner = (Spinner) findViewById(R.id.methodSpinner);
+        mRuleSpinner = (Spinner) findViewById(R.id.ruleSpinner);
         mCalculateButton = (Button) findViewById(R.id.calculateButton);
         mRoundText = (TextView) findViewById(R.id.roundText);
         mRoundButton = (Button) findViewById(R.id.roundButton);
@@ -93,7 +93,7 @@ public class GameActivity extends AppCompatActivity {
         updateRerollText();
         updateScoreText(0);
         updateRoundText();
-        updateMethodSpinner();
+        updateRuleSpinner();
 
 
 
@@ -154,14 +154,15 @@ public class GameActivity extends AppCompatActivity {
         mCalculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String methodName = String.valueOf(mMethodSpinner.getSelectedItem());
-                int methodNumber = mMethodNames.get(methodName);
-                int score = mGame.calculateScore(methodNumber);
+                String ruleName = String.valueOf(mRuleSpinner.getSelectedItem());
+                int ruleNumber = mRuleNames.get(ruleName);
+                int score = mGame.calculateScore(ruleNumber);
                 mGame.setRerollsToZero();
                 updateRerollText();
                 updateScoreText(score);
+                updateAllDice();
                 mCalculateButton.setEnabled(false);
-                mMethodSpinner.setEnabled(false);
+                mRuleSpinner.setEnabled(false);
                 mRerollButton.setEnabled(false);
                 mRoundButton.setEnabled(true);
             }
@@ -172,17 +173,20 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(mGame.gameOver()){
                     Log.d("Debug", "Show score screen");
+                    int[] finalScores = mGame.getScoresPerRule();
+                    Intent intent = FinalScoreActivity.newIntent(GameActivity.this, finalScores);
+                    startActivity(intent);
                 }else {
                     mGame.nextRound();
                     if(mGame.gameOver()){
-                        mRoundButton.setText(R.string.roundButtonScore);
+                        mRoundButton.setText(R.string.round_button_score);
                     }
                     updateAllDice();
                     updateRerollText();
                     updateRoundText();
                     updateScoreText(0);
-                    updateMethodSpinner();
-                    mMethodSpinner.setEnabled(true);
+                    updateRuleSpinner();
+                    mRuleSpinner.setEnabled(true);
                     mCalculateButton.setEnabled(true);
                     mRoundButton.setEnabled(false);
 
@@ -233,38 +237,37 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void updateRerollText(){
-        String newRerollText = getResources().getString(R.string.rerollText) + " " + mGame.getRerollsLeft();
+        String newRerollText = getResources().getString(R.string.reroll_text) + " " + mGame.getRerollsLeft();
         mRerollText.setText(newRerollText);
     }
 
     private void updateScoreText(int score){
-        String newScoreText = getResources().getString(R.string.scoreText) + " " + score;
+        String newScoreText = getResources().getString(R.string.score_text) + " " + score;
         mScoreText.setText(newScoreText);
     }
     private void updateRoundText(){
-        String newRoundText = getResources().getString(R.string.roundText) + " " + mGame.getRound();
+        String newRoundText = getResources().getString(R.string.round_text) + " " + mGame.getRound();
         mRoundText.setText(newRoundText);
     }
 
-    private void updateMethodSpinner(){
-        ArrayAdapter<String> methodAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, createMethodSpinnerList());
-        methodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mMethodSpinner.setAdapter(methodAdapter);
+    private void updateRuleSpinner(){
+        ArrayAdapter<String> ruleAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, createRuleSpinnerList());
+        ruleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mRuleSpinner.setAdapter(ruleAdapter);
     }
 
-    private List<String> createMethodSpinnerList(){
+    private List<String> createRuleSpinnerList(){
         List<String> list = new ArrayList<String>();
-        boolean[] methodsUsed = mGame.getScoreMethodsUsed();
-        String[] values = getResources().getStringArray(R.array.methodArray);
+        boolean[] ruleUsed = mGame.getScoreRulesUsed();
+        String[] values = getResources().getStringArray(R.array.rule_array);
         for(int i = 0; i < 10; i++){
-            if(!methodsUsed[i]){
+            if(!ruleUsed[i]){
                 list.add(values[i]);
             }
         }
         return list;
     }
-
 
     private void updateDiceButtonGraphics(ImageButton diceButton, SparseIntArray diceGraphics, int diceValue){
         diceButton.setImageResource(diceGraphics.get(diceValue));
