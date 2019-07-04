@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,12 +14,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameActivity extends AppCompatActivity {
 
     private SparseIntArray mWhiteDices;
     private SparseIntArray mRedDices;
+    private Map<String, Integer> mMethodNames;
     private boolean[] mDiceMarkedForReroll;
     private Game mGame;
 
@@ -57,6 +61,12 @@ public class GameActivity extends AppCompatActivity {
         mRedDices.put(4, R.drawable.red4);
         mRedDices.put(5, R.drawable.red5);
         mRedDices.put(6, R.drawable.red6);
+
+        mMethodNames = new HashMap<>();
+        String[] values = getResources().getStringArray(R.array.methodArray);
+        for(int i = 0; i < 10; i++){
+            mMethodNames.put(values[i], i);
+        }
 
         mGame = new Game();
         mDiceMarkedForReroll = new boolean[] {false, false, false, false, false, false};
@@ -138,6 +148,21 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        mCalculateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String methodName = String.valueOf(mMethodSpinner.getSelectedItem());
+                int methodNumber = mMethodNames.get(methodName);
+                int score = mGame.calculateScore(methodNumber);
+                mGame.setRerollsToZero();
+                updateRerollText();
+                updateScoreText(score);
+                mCalculateButton.setEnabled(false);
+                mMethodSpinner.setEnabled(false);
+                mRerollButton.setEnabled(false);
+            }
+        });
+
     }
 
     private void markDice(int dice)
@@ -209,31 +234,31 @@ public class GameActivity extends AppCompatActivity {
         return list;
     }
 
-    private int methodStringToInt(String method){
-        switch(method) {
-            case "Low":
-                return 0;
-            case "Fours":
-                return 1;
-            case "Fives":
-                return 2;
-            case "Sixes":
-                return 3;
-            case "Sevens":
-                return 4;
-            case "Eight":
-                return 5;
-            case "Nines":
-                return 6;
-            case "Tens":
-                return 7;
-            case "Elevens":
-                return 8;
-            case "Twelves":
-                return 9;
-        }
-        return 0;
-    }
+//    private int methodStringToInt(String method){
+//        switch(method) {
+//            case "Low":
+//                return 0;
+//            case "Fours":
+//                return 1;
+//            case "Fives":
+//                return 2;
+//            case "Sixes":
+//                return 3;
+//            case "Sevens":
+//                return 4;
+//            case "Eight":
+//                return 5;
+//            case "Nines":
+//                return 6;
+//            case "Tens":
+//                return 7;
+//            case "Elevens":
+//                return 8;
+//            case "Twelves":
+//                return 9;
+//        }
+//        return 0;
+//    }
 
     private void updateDiceButtonGraphics(ImageButton diceButton, SparseIntArray diceGraphics, int diceValue){
         diceButton.setImageResource(diceGraphics.get(diceValue));
