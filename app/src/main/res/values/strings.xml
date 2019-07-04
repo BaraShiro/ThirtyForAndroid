@@ -5,7 +5,27 @@
     <string name="start_button">Start</string>
     <string name="title_activity_game">GameActivity</string>
 
-    <string name="reroll">Reroll selected dice</string>
+    <string name="rerollButton">Reroll selected dice</string>
+    <string name="rerollText">Rerolls left:</string>
+
+    <string name="caculateButton">Calculate score</string>
+    <string name="scoreText">Score this round:</string>
+
+    <string-array name="methodArray">
+        <item>Low</item>
+        <item>Fours</item>
+        <item>Fives</item>
+        <item>Sixes</item>
+        <item>Sevens</item>
+        <item>Eights</item>
+        <item>Nines</item>
+        <item>Tens</item>
+        <item>Elevens</item>
+        <item>Twelves</item>
+    </string-array>
+
+    <string name="methodText">Method</string>
+
 
 
     <string name="dice_one">Dice One</string>
