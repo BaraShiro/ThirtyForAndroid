@@ -11,7 +11,8 @@ public class Game {
     private int[] mScoreMethods;
     private int mRerollsLeft;
     private int mRound;
-    private int[] mScores;
+    private int[] mScoresPerMethod;
+    private int[] mScoresPerRound;
 
     public Game(){
         mDices = new D6[] {new D6(), new D6(), new D6(), new D6(), new D6(), new D6()};
@@ -20,7 +21,8 @@ public class Game {
         mScoreMethods = new int[] {3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
         mRerollsLeft = 2;
         mRound = 1;
-        mScores = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        mScoresPerMethod = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        mScoresPerRound = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     }
 
     public int[] getDiceValues(){
@@ -47,8 +49,17 @@ public class Game {
         return mRound > 10;
     }
 
-    public int[] getScores() {
-        return mScores;
+    public int[] getScoresPerMethod() {
+        return mScoresPerMethod;
+    }
+
+    public int[] getScoresPerRound() {
+        return mScoresPerRound;
+    }
+
+
+    public  int getCurrentScore(){
+        return mScoresPerRound[mRound - 1];
     }
 
     public void nextRound(){
@@ -83,7 +94,8 @@ public class Game {
         }
         int score = computeScore(mScoreMethods[methodNumber], diceValueList);
         mScoreMethodsUsed[methodNumber] = true;
-        mScores[methodNumber] = score;
+        mScoresPerMethod[methodNumber] = score;
+        mScoresPerRound[mRound - 1] = score;
         return score;
     }
 
