@@ -1,10 +1,13 @@
 package moe.barashiro.thirtyforandroid;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Game {
+public class Game implements Parcelable {
 
     private D6[] mDices;
     private boolean[] mScoreRulesUsed;
@@ -15,6 +18,54 @@ public class Game {
     private int[] mScoresPerRule;
     private int[] mScoresPerRound;
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Game> CREATOR = new Creator<Game>() {
+        @Override
+        public Game createFromParcel(Parcel in) {
+            return new Game(in);
+        }
+
+        @Override
+        public Game[] newArray(int size) {
+            return new Game[size];
+        }
+    };
+
+    public static Creator<Game> getCREATOR() {
+        return CREATOR;
+    }
+    
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        // save dice ints
+        parcel.writeBooleanArray(mScoreRulesUsed);
+        parcel.writeIntArray(mScoreRules);
+        parcel.writeInt(mRerollsLeft);
+        parcel.writeInt(mRound);
+        parcel.writeInt(mGameOver ? 1 : 0); // Workaround for Parcel not having writeBoolean()
+        parcel.writeIntArray(mScoresPerRule);
+        parcel.writeIntArray(mScoresPerRound);
+
+
+    }
+
+    public Game(Parcel in) {
+        // load dice ints
+        mDices = new D6[] {new D6(), new D6(), new D6(), new D6(), new D6(), new D6()};
+        rerollAllDices();
+        in.readBooleanArray(mScoreRulesUsed);
+        in.readIntArray(mScoreRules);
+        mRerollsLeft = in.readInt();
+        mRound = in.readInt();
+        mGameOver = in.readInt() == 1;
+        in.readIntArray(mScoresPerRule);
+        in.readIntArray(mScoresPerRound);
+    }
+
     public Game(){
         mDices = new D6[] {new D6(), new D6(), new D6(), new D6(), new D6(), new D6()};
         rerollAllDices();
@@ -22,6 +73,7 @@ public class Game {
         mScoreRules = new int[] {3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
         mRerollsLeft = 2;
         mRound = 1;
+        mGameOver = false;
         mScoresPerRule = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         mScoresPerRound = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     }
