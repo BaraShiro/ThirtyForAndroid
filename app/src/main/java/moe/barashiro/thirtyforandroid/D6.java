@@ -6,6 +6,11 @@ public class D6 {
     private int mValue;
     private Random mRandom;
 
+    public D6(int  value){
+        mValue = value;
+        mRandom = new Random();
+    }
+
     public D6(){
         mValue = 1;
         mRandom = new Random();
