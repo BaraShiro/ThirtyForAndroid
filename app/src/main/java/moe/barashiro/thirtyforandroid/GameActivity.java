@@ -63,6 +63,7 @@ public class GameActivity extends AppCompatActivity {
                 (ImageButton) findViewById(R.id.diceSixButton)
         };
         mReroll = (Button) findViewById(R.id.reroll);
+        mReroll.setEnabled(false);
 
         updateAllDice();
 
@@ -115,9 +116,7 @@ public class GameActivity extends AppCompatActivity {
 
                 mGame.rerollDices(diceMarkedForReroll[0], diceMarkedForReroll[1],diceMarkedForReroll[2],diceMarkedForReroll[3],diceMarkedForReroll[4],diceMarkedForReroll[5]);
                 updateAllDice();
-                if(mGame.getRerollsLeft() < 1) {
-                    mReroll.setEnabled(false);
-                }
+                mReroll.setEnabled(false);
             }
         });
 
@@ -125,14 +124,23 @@ public class GameActivity extends AppCompatActivity {
 
     private void markDice(int dice)
     {
-        if(diceMarkedForReroll[dice]){
-            diceMarkedForReroll[dice] = false;
-            updateDiceButtonGraphics(mDiceButtons[dice], whiteDices, mGame.getDiceValue(dice));
+        if(mGame.getRerollsLeft() > 0) {
+            if (diceMarkedForReroll[dice]) {
+                diceMarkedForReroll[dice] = false;
+                updateDiceButtonGraphics(mDiceButtons[dice], whiteDices, mGame.getDiceValue(dice));
+            } else {
+                diceMarkedForReroll[dice] = true;
+                updateDiceButtonGraphics(mDiceButtons[dice], redDices, mGame.getDiceValue(dice));
+            }
+
+            if(someDiceAreMarked()){
+                mReroll.setEnabled(true);
+            } else{
+                mReroll.setEnabled(false);
+            }
+
         }
-        else{
-            diceMarkedForReroll[dice] = true;
-            updateDiceButtonGraphics(mDiceButtons[dice], redDices, mGame.getDiceValue(dice));
-        }
+        // TODO: Maybe toast "no rerolls left" in else branch
     }
 
     private void updateAllDice(){
@@ -141,6 +149,17 @@ public class GameActivity extends AppCompatActivity {
             updateDiceButtonGraphics(mDiceButtons[i], whiteDices, diceValues[i]);
             diceMarkedForReroll[i] = false;
         }
+
+    }
+
+    private boolean someDiceAreMarked(){
+        boolean marked = false;
+        for (int i = 0; i < 6; i++){
+            if(diceMarkedForReroll[i]){
+                marked = true;
+            }
+        }
+        return marked;
     }
 
     private void updateDiceButtonGraphics(ImageButton diceButton, SparseIntArray diceGraphics, int diceValue){
