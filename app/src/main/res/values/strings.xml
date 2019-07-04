@@ -26,7 +26,9 @@
 
     <string name="methodText">Method</string>
 
-
+    <string name="roundText">Round</string>
+    <string name="roundButton">Next round</string>
+    <string name="roundButtonScore">Final score</string>
 
     <string name="dice_one">Dice One</string>
     <string name="dice_two">Dice Two</string>

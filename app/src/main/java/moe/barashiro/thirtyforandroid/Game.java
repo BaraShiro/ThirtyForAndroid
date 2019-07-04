@@ -13,6 +13,7 @@ public class Game {
     private int[] mScoreMethods;
     private int mRerollsLeft;
     private int mRound;
+    private boolean mGameOver;
     private int[] mScoresPerMethod;
     private int[] mScoresPerRound;
 
@@ -51,8 +52,8 @@ public class Game {
         mRerollsLeft = 0;
     }
 
-    public boolean isGameOver(){
-        return mRound > 10;
+    public boolean gameOver(){
+        return mGameOver;
     }
 
     public int[] getScoresPerMethod() {
@@ -63,16 +64,23 @@ public class Game {
         return mScoresPerRound;
     }
 
+    public int getRound(){
+        return mRound;
+    }
 
     public  int getCurrentScore(){
         return mScoresPerRound[mRound - 1];
     }
 
     public void nextRound(){
-        mRound++;
-        mRerollsLeft = 2;
-
-        rerollAllDices();
+        if(!mGameOver) {
+            mRound++;
+            mRerollsLeft = 2;
+            rerollAllDices();
+            if (mRound >= 10) {
+                mGameOver = true;
+            }
+        }
     }
 
     public void rerollDices(boolean diceOne, boolean diceTwo, boolean diceTree, // Inelegant but safe as compared to a boolean[]

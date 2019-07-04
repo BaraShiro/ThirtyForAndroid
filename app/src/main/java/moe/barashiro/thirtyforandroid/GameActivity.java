@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.SparseArray;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -29,12 +29,11 @@ public class GameActivity extends AppCompatActivity {
     private ImageButton[] mDiceButtons;
     private TextView mRerollText;
     private Button mRerollButton;
-    private TextView mRerollsLeftText;
-    private TextView mRoundText;
     private TextView mScoreText;
     private Spinner mMethodSpinner;
     private Button mCalculateButton;
-    private Button mNext;
+    private TextView mRoundText;
+    private Button mRoundButton;
 
     public static Intent newIntent(Context packageContext) {
         Intent intent = new Intent(packageContext, GameActivity.class);
@@ -76,6 +75,8 @@ public class GameActivity extends AppCompatActivity {
         mScoreText = (TextView) findViewById(R.id.scoreText);
         mMethodSpinner = (Spinner) findViewById(R.id.methodSpinner);
         mCalculateButton = (Button) findViewById(R.id.calculateButton);
+        mRoundText = (TextView) findViewById(R.id.roundText);
+        mRoundButton = (Button) findViewById(R.id.roundButton);
         mDiceButtons = new ImageButton[] {
                 (ImageButton) findViewById(R.id.diceOneButton),
                 (ImageButton) findViewById(R.id.diceTwoButton),
@@ -87,9 +88,11 @@ public class GameActivity extends AppCompatActivity {
 
 
         mRerollButton.setEnabled(false);
+        mRoundButton.setEnabled(false);
         updateAllDice();
         updateRerollText();
         updateScoreText(0);
+        updateRoundText();
         updateMethodSpinner();
 
 
@@ -160,6 +163,30 @@ public class GameActivity extends AppCompatActivity {
                 mCalculateButton.setEnabled(false);
                 mMethodSpinner.setEnabled(false);
                 mRerollButton.setEnabled(false);
+                mRoundButton.setEnabled(true);
+            }
+        });
+
+        mRoundButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mGame.gameOver()){
+                    Log.d("Debug", "Show score screen");
+                }else {
+                    mGame.nextRound();
+                    if(mGame.gameOver()){
+                        mRoundButton.setText(R.string.roundButtonScore);
+                    }
+                    updateAllDice();
+                    updateRerollText();
+                    updateRoundText();
+                    updateScoreText(0);
+                    updateMethodSpinner();
+                    mMethodSpinner.setEnabled(true);
+                    mCalculateButton.setEnabled(true);
+                    mRoundButton.setEnabled(false);
+
+                }
             }
         });
 
@@ -214,6 +241,10 @@ public class GameActivity extends AppCompatActivity {
         String newScoreText = getResources().getString(R.string.scoreText) + " " + score;
         mScoreText.setText(newScoreText);
     }
+    private void updateRoundText(){
+        String newRoundText = getResources().getString(R.string.roundText) + " " + mGame.getRound();
+        mRoundText.setText(newRoundText);
+    }
 
     private void updateMethodSpinner(){
         ArrayAdapter<String> methodAdapter = new ArrayAdapter<String>(this,
@@ -234,31 +265,6 @@ public class GameActivity extends AppCompatActivity {
         return list;
     }
 
-//    private int methodStringToInt(String method){
-//        switch(method) {
-//            case "Low":
-//                return 0;
-//            case "Fours":
-//                return 1;
-//            case "Fives":
-//                return 2;
-//            case "Sixes":
-//                return 3;
-//            case "Sevens":
-//                return 4;
-//            case "Eight":
-//                return 5;
-//            case "Nines":
-//                return 6;
-//            case "Tens":
-//                return 7;
-//            case "Elevens":
-//                return 8;
-//            case "Twelves":
-//                return 9;
-//        }
-//        return 0;
-//    }
 
     private void updateDiceButtonGraphics(ImageButton diceButton, SparseIntArray diceGraphics, int diceValue){
         diceButton.setImageResource(diceGraphics.get(diceValue));
