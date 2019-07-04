@@ -1,5 +1,7 @@
 package moe.barashiro.thirtyforandroid;
 
+import android.util.Log;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,6 +47,10 @@ public class Game {
         return mRerollsLeft;
     }
 
+    public void setRerollsToZero(){
+        mRerollsLeft = 0;
+    }
+
     public boolean isGameOver(){
         return mRound > 10;
     }
@@ -86,7 +92,7 @@ public class Game {
         }
     }
 
-    public int commit(int methodNumber){
+    public int calculateScore(int methodNumber){
         List<Integer> diceValueList = new LinkedList<>();
 
         for (D6 dice : mDices){
@@ -100,18 +106,27 @@ public class Game {
     }
 
     private int computeScore(int rule, List<Integer> intList){
-        // TODO: Handle "low" case here
-        List<Integer> out = new LinkedList<>();
+        if(rule < 4){
+            int out = 0;
+            for(Integer i : intList){
+                if(i < 4){
+                    out += i;
+                }
+            }
+            return out;
 
-        for(int i = 0; i < intList.size(); i++){
-            List<Integer> newList = new LinkedList<>(intList);
-            int current = newList.get(i);
-            newList.remove(i);
+        }else{
+            List<Integer> out = new LinkedList<>();
 
-            out.add(computeScoreAux(current, newList, rule, 0));
+            for(int i = 0; i < intList.size(); i++){
+                List<Integer> newList = new LinkedList<>(intList);
+                int current = newList.get(i);
+                newList.remove(i);
+
+                out.add(computeScoreAux(current, newList, rule, 0));
+            }
+            return Collections.max(out);
         }
-
-        return Collections.max(out);
     }
 
     private int computeScoreAux(int current, List<Integer> rest, int rule, int score){
