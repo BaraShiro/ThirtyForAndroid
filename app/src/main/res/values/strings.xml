@@ -2,33 +2,43 @@
     <string name="app_name">ThirtyForAndroid</string>
     <string name="thirty">Thirty</string>
     <string name="for_android">for Android</string>
-    <string name="start_button">Start</string>
-    <string name="title_activity_game">GameActivity</string>
+    <string name="start_button">New game</string>
 
-    <string name="rerollButton">Reroll selected dice</string>
-    <string name="rerollText">Rerolls left:</string>
 
-    <string name="caculateButton">Calculate score</string>
-    <string name="scoreText">Score this round:</string>
+    <string name="reroll_button">Reroll selected dice</string>
+    <string name="reroll_text">Rerolls left:</string>
 
-    <string-array name="methodArray">
-        <item>Low</item>
-        <item>Fours</item>
-        <item>Fives</item>
-        <item>Sixes</item>
-        <item>Sevens</item>
-        <item>Eights</item>
-        <item>Nines</item>
-        <item>Tens</item>
-        <item>Elevens</item>
-        <item>Twelves</item>
+    <string name="calculate_button">Calculate score</string>
+    <string name="score_text">Score this round:</string>
+
+    <string name="low">Low</string>
+    <string name="fours">Fours</string>
+    <string name="fives">Fives</string>
+    <string name="sixes">Sixes</string>
+    <string name="sevens">Sevens</string>
+    <string name="eights">Eights</string>
+    <string name="nines">Nines</string>
+    <string name="tens">Tens</string>
+    <string name="elevens">Elevens</string>
+    <string name="twelves">Twelves</string>
+    <string name="total">Total</string>
+
+    <string-array name="rule_array">
+        <item>@string/low</item>
+        <item>@string/fours</item>
+        <item>@string/fives</item>
+        <item>@string/sixes</item>
+        <item>@string/sevens</item>
+        <item>@string/eights</item>
+        <item>@string/nines</item>
+        <item>@string/tens</item>
+        <item>@string/elevens</item>
+        <item>@string/twelves</item>
     </string-array>
 
-    <string name="methodText">Method</string>
-
-    <string name="roundText">Round</string>
-    <string name="roundButton">Next round</string>
-    <string name="roundButtonScore">Final score</string>
+    <string name="round_text">Round</string>
+    <string name="round_button">Next round</string>
+    <string name="round_button_score">Final score</string>
 
     <string name="dice_one">Dice One</string>
     <string name="dice_two">Dice Two</string>
@@ -36,4 +46,10 @@
     <string name="dice_four">Dice Four</string>
     <string name="dice_five">Dice Five</string>
     <string name="dice_six">Dice Six</string>
+
+    <string name="score_screen_rule_text">Rule</string>
+    <string name="score_screen_score_text">Score</string>
+    <string name="score_screen_final_score_text">Final score</string>
+
+
 </resources>
