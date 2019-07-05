@@ -22,7 +22,7 @@
                 android:layout_margin="5dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/dice_one"
-                android:src="@drawable/white1" />
+                android:src="@drawable/ic_dicewhiteone" />
 
             <ImageButton
                 android:id="@+id/diceTwoButton"
@@ -31,7 +31,7 @@
                 android:layout_margin="5dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/dice_one"
-                android:src="@drawable/white1" />
+                android:src="@drawable/ic_dicewhiteone" />
 
             <ImageButton
                 android:id="@+id/diceThreeButton"
@@ -40,7 +40,7 @@
                 android:layout_margin="5dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/dice_one"
-                android:src="@drawable/white1" />
+                android:src="@drawable/ic_dicewhiteone" />
 
         </LinearLayout>
 
@@ -56,7 +56,7 @@
                 android:layout_margin="5dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/dice_one"
-                android:src="@drawable/white1" />
+                android:src="@drawable/ic_dicewhiteone" />
 
             <ImageButton
                 android:id="@+id/diceFiveButton"
@@ -65,7 +65,7 @@
                 android:layout_margin="5dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/dice_one"
-                android:src="@drawable/white1" />
+                android:src="@drawable/ic_dicewhiteone" />
 
             <ImageButton
                 android:id="@+id/diceSixButton"
@@ -74,7 +74,7 @@
                 android:layout_margin="5dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/dice_one"
-                android:src="@drawable/white1" />
+                android:src="@drawable/ic_dicewhiteone" />
 
         </LinearLayout>
 

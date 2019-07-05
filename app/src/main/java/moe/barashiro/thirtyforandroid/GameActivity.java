@@ -193,20 +193,20 @@ public class GameActivity extends AppCompatActivity {
 
     private void initDiceGraphics(){
         mWhiteDices = new SparseIntArray(6);
-        mWhiteDices.put(1, R.drawable.white1);
-        mWhiteDices.put(2, R.drawable.white2);
-        mWhiteDices.put(3, R.drawable.white3);
-        mWhiteDices.put(4, R.drawable.white4);
-        mWhiteDices.put(5, R.drawable.white5);
-        mWhiteDices.put(6, R.drawable.white6);
+        mWhiteDices.put(1, R.drawable.ic_dicewhiteone);
+        mWhiteDices.put(2, R.drawable.ic_dicewhitetwo);
+        mWhiteDices.put(3, R.drawable.ic_dicewhitethree);
+        mWhiteDices.put(4, R.drawable.ic_dicewhitefour);
+        mWhiteDices.put(5, R.drawable.ic_dicewhitefive);
+        mWhiteDices.put(6, R.drawable.ic_dicewhitesix);
 
         mRedDices = new SparseIntArray(6);
-        mRedDices.put(1, R.drawable.red1);
-        mRedDices.put(2, R.drawable.red2);
-        mRedDices.put(3, R.drawable.red3);
-        mRedDices.put(4, R.drawable.red4);
-        mRedDices.put(5, R.drawable.red5);
-        mRedDices.put(6, R.drawable.red6);
+        mRedDices.put(1, R.drawable.ic_diceredone);
+        mRedDices.put(2, R.drawable.ic_diceredtwo);
+        mRedDices.put(3, R.drawable.ic_diceredthree);
+        mRedDices.put(4, R.drawable.ic_diceredfour);
+        mRedDices.put(5, R.drawable.ic_diceredfive);
+        mRedDices.put(6, R.drawable.ic_diceredsix);
 
     }
 
