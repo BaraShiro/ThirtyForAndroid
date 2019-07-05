@@ -7,6 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * Activity for the main start screen.
+ * Starts the game activity and the rules activity.
+ *
+ * @author  Robert Rosborg
+ * @version 1.2
+ */
 public class MainActivity extends AppCompatActivity {
 
     private TextView mThrityText;
@@ -14,6 +21,11 @@ public class MainActivity extends AppCompatActivity {
     private Button mStartButton;
     private Button mRulesButton;
 
+    /**
+     * Method for creating the activity.
+     *
+     * @param savedInstanceState A Bundle containing a saved state or null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

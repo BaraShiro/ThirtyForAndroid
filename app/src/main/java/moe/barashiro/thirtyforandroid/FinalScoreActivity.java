@@ -6,6 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+/**
+ * Activity for showing the final score.
+ *
+ * @author  Robert Rosborg
+ * @version 1.0
+ */
 public class FinalScoreActivity extends AppCompatActivity {
     private static final String FINAL_SCORES = "moe.barashiro.thirtyforandroid.final_scores";
 
@@ -13,13 +19,24 @@ public class FinalScoreActivity extends AppCompatActivity {
     private TextView[] mScoreTexts;
     private TextView mTotalScore;
 
-
+    /**
+     * Method for creating a new Intent for starting the FinalScoreActivity.
+     *
+     * @param packageContext The context for the intent.
+     * @param finalScores An array of scores.
+     * @return A new Intent for starting the FinalScoreActivity.
+     */
     public static Intent newIntent(Context packageContext, int[] finalScores) {
         Intent intent = new Intent(packageContext, FinalScoreActivity.class);
         intent.putExtra(FINAL_SCORES, finalScores);
         return intent;
     }
 
+    /**
+     * Method for creating the activity.
+     *
+     * @param savedInstanceState A Bundle containing a saved state or null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +56,9 @@ public class FinalScoreActivity extends AppCompatActivity {
                 (TextView) findViewById(R.id.scoreScreenTwelvesScoreText),
         };
         mTotalScore = (TextView) findViewById(R.id.scoreScreenTotalScoreText);
-        int total = 0;
+
+        // Populate the TextViews by looping over the scores,
+        int total = 0; // and simultaneously calculate the total score.
         for(int i = 0; i < 10; i++){
             mScoreTexts[i].setText(Integer.toString(mFinalScores[i]));
             total += mFinalScores[i];

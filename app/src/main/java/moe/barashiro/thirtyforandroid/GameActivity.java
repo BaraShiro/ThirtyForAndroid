@@ -17,7 +17,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * Activity for the game.
+ * Starts the final score activity.
+ *
+ * @author  Robert Rosborg
+ * @version 1.7
+ */
 public class GameActivity extends AppCompatActivity {
     private static final String SAVED_GAME_STATE = "savedGameState";
     private static final String SAVED_ROUND_STATE = "savedRoundState";
@@ -38,11 +44,23 @@ public class GameActivity extends AppCompatActivity {
     private TextView mRoundText;
     private Button mRoundButton;
 
+    /**
+     * Method for
+     *
+     * @param
+     * @return
+     */
     public static Intent newIntent(Context packageContext) {
         Intent intent = new Intent(packageContext, GameActivity.class);
         return intent;
     }
 
+    /**
+     * Method for
+     *
+     * @param
+     * @return
+     */
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -50,11 +68,17 @@ public class GameActivity extends AppCompatActivity {
         savedInstanceState.putBoolean(SAVED_ROUND_STATE, mRoundPlayed);
     }
 
+    /**
+     * Method for creating the activity.
+     *
+     * @param savedInstanceState A Bundle containing a saved state or null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        // Initialize mappings.
         initDiceGraphics();
         initRuleNames();
 
@@ -65,7 +89,7 @@ public class GameActivity extends AppCompatActivity {
             mRoundPlayed = savedInstanceState.getBoolean(SAVED_ROUND_STATE);
         }
 
-
+        // Set all buttons and text views.
         mRerollButton = (Button) findViewById(R.id.rerollButton);
         mRerollText = (TextView) findViewById(R.id.rerollText);
         mScoreText = (TextView) findViewById(R.id.scoreText);
@@ -86,6 +110,7 @@ public class GameActivity extends AppCompatActivity {
         mDiceMarkedForReroll = new boolean[] {false, false, false, false, false, false};
         mRerollButton.setEnabled(false);
 
+        // Update everything.
         updateCalcAndRoundButtons();
         updateAllDice();
         updateRerollText();
@@ -93,9 +118,7 @@ public class GameActivity extends AppCompatActivity {
         updateRoundText();
         updateRuleSpinner();
 
-
-
-
+        // Set all listeners.
         mDiceButtons[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,7 +164,6 @@ public class GameActivity extends AppCompatActivity {
         mRerollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 mGame.rerollDices(mDiceMarkedForReroll[0], mDiceMarkedForReroll[1], mDiceMarkedForReroll[2], mDiceMarkedForReroll[3], mDiceMarkedForReroll[4], mDiceMarkedForReroll[5]);
                 updateAllDice();
                 updateRerollText();
@@ -154,7 +176,7 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String ruleName = String.valueOf(mRuleSpinner.getSelectedItem());
                 int ruleNumber = mRuleNames.get(ruleName);
-                int score = mGame.calculateScore(ruleNumber);
+                int _score = mGame.calculateScore(ruleNumber); //  Variable _score never actually used, the score is kept in the Game object.
                 mRoundPlayed = true;
                 mGame.setRerollsToZero();
                 mRerollButton.setEnabled(false);
@@ -168,16 +190,15 @@ public class GameActivity extends AppCompatActivity {
         mRoundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mGame.gameOver()){
-                    Log.d("Debug", "Show score screen");
+                if(mGame.gameOver()){ // If the game is over show the score screen,
                     int[] finalScores = mGame.getScoresPerRule();
                     Intent intent = FinalScoreActivity.newIntent(GameActivity.this, finalScores);
                     startActivity(intent);
-                }else {
+                }else { // otherwise advance to the next round.
                     mGame.nextRound();
                     mRoundPlayed = false;
                     if(mGame.gameOver()){
-                        mRoundButton.setText(R.string.round_button_score);
+                        mRoundButton.setText(R.string.round_button_score); // Change button text to indicate different behaviour.
                     }
                     updateAllDice();
                     updateRerollText();
@@ -190,7 +211,10 @@ public class GameActivity extends AppCompatActivity {
         });
 
     }
-
+    /**
+     * Method for initialising the graphics for the dice,
+     * by mapping numbers to drawables.
+     */
     private void initDiceGraphics(){
         mWhiteDices = new SparseIntArray(6);
         mWhiteDices.put(1, R.drawable.ic_dicewhiteone);
@@ -207,9 +231,12 @@ public class GameActivity extends AppCompatActivity {
         mRedDices.put(4, R.drawable.ic_diceredfour);
         mRedDices.put(5, R.drawable.ic_diceredfive);
         mRedDices.put(6, R.drawable.ic_diceredsix);
-
     }
 
+    /**
+     * Method for initialising the rule names,
+     * by mapping their string name to their position in the rules array.
+     */
     private void initRuleNames(){
         mRuleNames = new HashMap<>();
         String[] values = getResources().getStringArray(R.array.rule_array);
@@ -218,26 +245,34 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method for marking dice for rerolling.
+     *
+     * @param dice The dice to be rerolled.
+     */
     private void markDice(int dice)
     {
-        if(mGame.getRerollsLeft() > 0) {
-            if (mDiceMarkedForReroll[dice]) {
-                mDiceMarkedForReroll[dice] = false;
+        if(mGame.getRerollsLeft() > 0) { // If we have rerolls left,
+            if (mDiceMarkedForReroll[dice]) { // and the dice is marked,
+                mDiceMarkedForReroll[dice] = false; // unmark it and turn it white.
                 updateDiceButtonGraphics(mDiceButtons[dice], mWhiteDices, mGame.getDiceValue(dice));
-            } else {
-                mDiceMarkedForReroll[dice] = true;
+            } else { // If the dice is not marked,
+                mDiceMarkedForReroll[dice] = true; // mark it and turn it red.
                 updateDiceButtonGraphics(mDiceButtons[dice], mRedDices, mGame.getDiceValue(dice));
             }
 
+            // Enable or disable the reroll button based on if there are any marked  dice.
             if(someDiceAreMarked()){
                 mRerollButton.setEnabled(true);
             } else{
                 mRerollButton.setEnabled(false);
             }
-
         }
     }
 
+    /**
+     * Method for setting all dice graphics to the correct drawable.
+     */
     private void updateAllDice(){
         int[] diceValues = mGame.getDiceValues();
         for (int i = 0; i < 6; i++){
@@ -247,6 +282,11 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method for checking if there are marked dice.
+     *
+     * @return True if there are marked dice, else false.
+     */
     private boolean someDiceAreMarked(){
         boolean marked = false;
         for (int i = 0; i < 6; i++){
@@ -257,26 +297,43 @@ public class GameActivity extends AppCompatActivity {
         return marked;
     }
 
+    /**
+     * Method for updating the reroll text.
+     */
     private void updateRerollText(){
         String newRerollText = getResources().getString(R.string.reroll_text) + " " + mGame.getRerollsLeft();
         mRerollText.setText(newRerollText);
     }
 
+    /**
+     * Method for updating the score text.
+     */
     private void updateScoreText(){
         String newScoreText = getResources().getString(R.string.score_text) + " " + mGame.getCurrentScore();
         mScoreText.setText(newScoreText);
     }
+
+    /**
+     * Method for updating the round text.
+     */
     private void updateRoundText(){
         String newRoundText = getResources().getString(R.string.round_text) + " " + mGame.getRound();
         mRoundText.setText(newRoundText);
     }
 
+    /**
+     * Method for enabling and disabling the calculate button, the rule spinner,
+     * and the round button, based on if the current round has been played.
+     */
     private void updateCalcAndRoundButtons(){
         mCalculateButton.setEnabled(!mRoundPlayed);
         mRuleSpinner.setEnabled(!mRoundPlayed);
         mRoundButton.setEnabled(mRoundPlayed);
     }
 
+    /**
+     * Method for updating the choices in the rule spinner based on what rules have been used this game.
+     */
     private void updateRuleSpinner(){
         ArrayAdapter<String> ruleAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, createRuleSpinnerList());
@@ -284,6 +341,11 @@ public class GameActivity extends AppCompatActivity {
         mRuleSpinner.setAdapter(ruleAdapter);
     }
 
+    /**
+     * Method for creating a list of choices for the rule spinner based on what rules have been used this game.
+
+     * @return A list of unused rules that will appear in the rules spinner.
+     */
     private List<String> createRuleSpinnerList(){
         List<String> list = new ArrayList<String>();
         boolean[] ruleUsed = mGame.getScoreRulesUsed();
@@ -296,6 +358,13 @@ public class GameActivity extends AppCompatActivity {
         return list;
     }
 
+    /**
+     * Method for updating the graphics for a dice buttons.
+     *
+     * @param diceButton The button to update.
+     * @param diceGraphics An array of graphics from which the new graphic will be taken.
+     * @param diceValue The value of the dice to be represented on the graphics.
+     */
     private void updateDiceButtonGraphics(ImageButton diceButton, SparseIntArray diceGraphics, int diceValue){
         diceButton.setImageResource(diceGraphics.get(diceValue));
     }
