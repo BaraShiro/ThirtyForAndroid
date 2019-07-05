@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GameActivity extends AppCompatActivity {
+    private static final String SAVED_GAME_STATE = "savedGameState";
 
     private SparseIntArray mWhiteDices;
     private SparseIntArray mRedDices;
@@ -38,6 +39,12 @@ public class GameActivity extends AppCompatActivity {
     public static Intent newIntent(Context packageContext) {
         Intent intent = new Intent(packageContext, GameActivity.class);
         return intent;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putParcelable(SAVED_GAME_STATE, mGame);
     }
 
     @Override
@@ -62,12 +69,16 @@ public class GameActivity extends AppCompatActivity {
         mRedDices.put(6, R.drawable.red6);
 
         mRuleNames = new HashMap<>();
-        String[] values = getResources().getStringArray(R.array.rule_array);
+        String[] values = getResources().getStringArray(R.array.rule_array); //TODO: Check if get().get() is unnecessary
         for(int i = 0; i < 10; i++){
             mRuleNames.put(values[i], i);
         }
 
         mGame = new Game();
+        if (savedInstanceState != null) {
+            mGame = savedInstanceState.getParcelable(SAVED_GAME_STATE);
+        }
+
         mDiceMarkedForReroll = new boolean[] {false, false, false, false, false, false};
 
         mRerollButton = (Button) findViewById(R.id.rerollButton);
