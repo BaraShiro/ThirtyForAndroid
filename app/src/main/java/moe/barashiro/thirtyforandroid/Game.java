@@ -38,25 +38,30 @@ public class Game implements Parcelable {
     public static Creator<Game> getCREATOR() {
         return CREATOR;
     }
-    
+
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        // save dice ints
-        parcel.writeBooleanArray(mScoreRulesUsed);
-        parcel.writeIntArray(mScoreRules);
-        parcel.writeInt(mRerollsLeft);
-        parcel.writeInt(mRound);
-        parcel.writeInt(mGameOver ? 1 : 0); // Workaround for Parcel not having writeBoolean()
-        parcel.writeIntArray(mScoresPerRule);
-        parcel.writeIntArray(mScoresPerRound);
+    public void writeToParcel(Parcel out, int flags) {
+        int[] diceValues = new int[6];
+        for(int i = 0; i < 6; i++){
+            diceValues[i] = mDices[i].getValue();
+        }
+        out.writeIntArray(diceValues);
+        out.writeBooleanArray(mScoreRulesUsed);
+        out.writeIntArray(mScoreRules);
+        out.writeInt(mRerollsLeft);
+        out.writeInt(mRound);
+        out.writeInt(mGameOver ? 1 : 0); // Workaround for Parcel not having writeBoolean()
+        out.writeIntArray(mScoresPerRule);
+        out.writeIntArray(mScoresPerRound);
 
 
     }
 
     public Game(Parcel in) {
-        // load dice ints
-        mDices = new D6[] {new D6(), new D6(), new D6(), new D6(), new D6(), new D6()};
-        rerollAllDices();
+        int[] diceValues = new int[6];
+        in.readIntArray(diceValues);
+        mDices = new D6[] {new D6(diceValues[0]), new D6(diceValues[1]), new D6(diceValues[2]),
+                            new D6(diceValues[3]), new D6(diceValues[4]), new D6(diceValues[5])};
         in.readBooleanArray(mScoreRulesUsed);
         in.readIntArray(mScoreRules);
         mRerollsLeft = in.readInt();
@@ -68,7 +73,7 @@ public class Game implements Parcelable {
 
     public Game(){
         mDices = new D6[] {new D6(), new D6(), new D6(), new D6(), new D6(), new D6()};
-        rerollAllDices();
+        rerollAllDices(); // TODO: Fix so dices are rolled on creation
         mScoreRulesUsed = new boolean[] {false, false, false, false, false, false, false, false, false, false};
         mScoreRules = new int[] {3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
         mRerollsLeft = 2;

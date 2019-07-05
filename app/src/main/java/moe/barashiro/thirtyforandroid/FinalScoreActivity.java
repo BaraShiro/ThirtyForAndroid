@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class FinalScoreActivity extends AppCompatActivity {
-    private static final String FINAL_SCORES =
-            "moe.barashiro.thirtyforandroid.final_scores";
+    private static final String FINAL_SCORES = "moe.barashiro.thirtyforandroid.final_scores";
 
     private int[] mFinalScores;
     private TextView[] mScoreTexts;
@@ -20,8 +19,7 @@ public class FinalScoreActivity extends AppCompatActivity {
         intent.putExtra(FINAL_SCORES, finalScores);
         return intent;
     }
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
