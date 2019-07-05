@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:layout_margin="20dp"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/scoreScreenFinalScoreText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="@string/score_screen_final_score_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/scoreScreenRuleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score_screen_rule_text" />
+
+            <TextView
+                android:id="@+id/scoreScreenScoreText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score_screen_score_text" />
+
+            <TextView
+                android:id="@+id/scoreScreenRuleTextLand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score_screen_rule_text" />
+
+            <TextView
+                android:id="@+id/scoreScreenScoreTextLand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score_screen_score_text" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/scoreScreenRuleLowText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/low" />
+
+            <TextView
+                android:id="@+id/scoreScreenLowScoreText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score_screen_score_text" />
+
+            <TextView
+                android:id="@+id/scoreScreenRuleEightsText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/eights" />
+
+            <TextView
+                android:id="@+id/scoreScreenEightsScoreText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score_screen_score_text" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/scoreScreenRuleFoursText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fours" />
+
+            <TextView
+                android:id="@+id/scoreScreenFoursScoreText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score_screen_score_text" />
+
+            <TextView
+                android:id="@+id/scoreScreenRuleNinesText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nines" />
+
+            <TextView
+                android:id="@+id/scoreScreenNinesScoreText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score_screen_score_text" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/scoreScreenRuleFivesText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fives" />
+
+            <TextView
+                android:id="@+id/scoreScreenFivesScoreText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score_screen_score_text" />
+
+            <TextView
+                android:id="@+id/scoreScreenRuleTensText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tens" />
+
+            <TextView
+                android:id="@+id/scoreScreenTensScoreText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score_screen_score_text" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/scoreScreenRuleSixesText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sixes" />
+
+            <TextView
+                android:id="@+id/scoreScreenSixesScoreText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score_screen_score_text" />
+
+            <TextView
+                android:id="@+id/scoreScreenRuleElevensText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/elevens" />
+
+            <TextView
+                android:id="@+id/scoreScreenElevensScoreText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score_screen_score_text" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/scoreScreenRuleSevensText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sevens" />
+
+            <TextView
+                android:id="@+id/scoreScreenSevensScoreText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score_screen_score_text" />
+
+            <TextView
+                android:id="@+id/scoreScreenRuleTwelvesText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/twelves" />
+
+            <TextView
+                android:id="@+id/scoreScreenTwelvesScoreText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score_screen_score_text" />
+
+        </TableRow>
+
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:id="@+id/scoreScreenRuleTotalText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/total" />
+
+            <TextView
+                android:id="@+id/scoreScreenTotalScoreText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/score_screen_score_text" />
+
+        </TableRow>
+
+
+    </TableLayout>
+
+</LinearLayout>
