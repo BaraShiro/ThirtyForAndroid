@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mThrityText;
     private TextView mForAndroidText;
     private Button mStartButton;
+    private Button mRulesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,11 +21,21 @@ public class MainActivity extends AppCompatActivity {
 
         mThrityText = (TextView) findViewById(R.id.thirty);
         mForAndroidText = (TextView) findViewById(R.id.for_android);
+
         mStartButton = (Button) findViewById(R.id.start_button);
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = GameActivity.newIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
+
+        mRulesButton = (Button) findViewById(R.id.rules_button);
+        mRulesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = RulesActivity.newIntent(MainActivity.this);
                 startActivity(intent);
             }
         });

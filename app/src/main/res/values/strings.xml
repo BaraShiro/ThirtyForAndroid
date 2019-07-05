@@ -3,6 +3,7 @@
     <string name="thirty">Thirty</string>
     <string name="for_android">for Android</string>
     <string name="start_button">New game</string>
+    <string name="rules_button">Rules</string>
 
 
     <string name="reroll_button">Reroll selected dice</string>
@@ -50,6 +51,9 @@
     <string name="score_screen_rule_text">Rule</string>
     <string name="score_screen_score_text">Score</string>
     <string name="score_screen_final_score_text">Final score</string>
+
+    <string name="rules_screen_title">Rules</string>
+    <string name="rules_screen_text">The game is played in ten rounds.\nEach round six dice are thrown.\nYou may reroll any number of dice, twice.\nYou score points by adding up the dice according to ten rules.\nAll rules except Low give points for dice that evenly add up to the rule’s number.\nLow give points for all dice three or lower.\nA rule can only be used once in a game, one for each round.\nWhen all ten rounds are over the final score is all round scores added up.\n</string>
 
 
 </resources>
