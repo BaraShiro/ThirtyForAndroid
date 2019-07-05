@@ -20,12 +20,14 @@ import java.util.Map;
 
 public class GameActivity extends AppCompatActivity {
     private static final String SAVED_GAME_STATE = "savedGameState";
+    private static final String SAVED_ROUND_STATE = "savedRoundState";
 
     private SparseIntArray mWhiteDices;
     private SparseIntArray mRedDices;
     private Map<String, Integer> mRuleNames;
     private boolean[] mDiceMarkedForReroll;
     private Game mGame;
+    private boolean mRoundPlayed;
 
     private ImageButton[] mDiceButtons;
     private TextView mRerollText;
@@ -45,6 +47,7 @@ public class GameActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putParcelable(SAVED_GAME_STATE, mGame);
+        savedInstanceState.putBoolean(SAVED_ROUND_STATE, mRoundPlayed);
     }
 
     @Override
@@ -55,13 +58,13 @@ public class GameActivity extends AppCompatActivity {
         initDiceGraphics();
         initRuleNames();
 
-
         mGame = new Game();
+        mRoundPlayed = false;
         if (savedInstanceState != null) {
             mGame = savedInstanceState.getParcelable(SAVED_GAME_STATE);
+            mRoundPlayed = savedInstanceState.getBoolean(SAVED_ROUND_STATE);
         }
 
-        mDiceMarkedForReroll = new boolean[] {false, false, false, false, false, false};
 
         mRerollButton = (Button) findViewById(R.id.rerollButton);
         mRerollText = (TextView) findViewById(R.id.rerollText);
@@ -79,12 +82,14 @@ public class GameActivity extends AppCompatActivity {
                 (ImageButton) findViewById(R.id.diceSixButton)
         };
 
-
+        // Marked dice are reset on loading a saved instance, this is a design choice.
+        mDiceMarkedForReroll = new boolean[] {false, false, false, false, false, false};
         mRerollButton.setEnabled(false);
-        mRoundButton.setEnabled(false);
+
+        updateCalcAndRoundButtons();
         updateAllDice();
         updateRerollText();
-        updateScoreText(0);
+        updateScoreText();
         updateRoundText();
         updateRuleSpinner();
 
@@ -150,14 +155,13 @@ public class GameActivity extends AppCompatActivity {
                 String ruleName = String.valueOf(mRuleSpinner.getSelectedItem());
                 int ruleNumber = mRuleNames.get(ruleName);
                 int score = mGame.calculateScore(ruleNumber);
+                mRoundPlayed = true;
                 mGame.setRerollsToZero();
-                updateRerollText();
-                updateScoreText(score);
-                updateAllDice();
-                mCalculateButton.setEnabled(false);
-                mRuleSpinner.setEnabled(false);
                 mRerollButton.setEnabled(false);
-                mRoundButton.setEnabled(true);
+                updateRerollText();
+                updateScoreText();
+                updateAllDice();
+                updateCalcAndRoundButtons();
             }
         });
 
@@ -171,18 +175,16 @@ public class GameActivity extends AppCompatActivity {
                     startActivity(intent);
                 }else {
                     mGame.nextRound();
+                    mRoundPlayed = false;
                     if(mGame.gameOver()){
                         mRoundButton.setText(R.string.round_button_score);
                     }
                     updateAllDice();
                     updateRerollText();
                     updateRoundText();
-                    updateScoreText(0);
+                    updateScoreText();
                     updateRuleSpinner();
-                    mRuleSpinner.setEnabled(true);
-                    mCalculateButton.setEnabled(true);
-                    mRoundButton.setEnabled(false);
-
+                    updateCalcAndRoundButtons();
                 }
             }
         });
@@ -260,13 +262,19 @@ public class GameActivity extends AppCompatActivity {
         mRerollText.setText(newRerollText);
     }
 
-    private void updateScoreText(int score){
-        String newScoreText = getResources().getString(R.string.score_text) + " " + score;
+    private void updateScoreText(){
+        String newScoreText = getResources().getString(R.string.score_text) + " " + mGame.getCurrentScore();
         mScoreText.setText(newScoreText);
     }
     private void updateRoundText(){
         String newRoundText = getResources().getString(R.string.round_text) + " " + mGame.getRound();
         mRoundText.setText(newRoundText);
+    }
+
+    private void updateCalcAndRoundButtons(){
+        mCalculateButton.setEnabled(!mRoundPlayed);
+        mRuleSpinner.setEnabled(!mRoundPlayed);
+        mRoundButton.setEnabled(mRoundPlayed);
     }
 
     private void updateRuleSpinner(){
