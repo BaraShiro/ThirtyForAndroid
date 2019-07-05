@@ -19,7 +19,7 @@ public class FinalScoreActivity extends AppCompatActivity {
         intent.putExtra(FINAL_SCORES, finalScores);
         return intent;
     }
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -52,27 +52,9 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        mWhiteDices = new SparseIntArray(6);
-        mWhiteDices.put(1, R.drawable.white1);
-        mWhiteDices.put(2, R.drawable.white2);
-        mWhiteDices.put(3, R.drawable.white3);
-        mWhiteDices.put(4, R.drawable.white4);
-        mWhiteDices.put(5, R.drawable.white5);
-        mWhiteDices.put(6, R.drawable.white6);
+        initDiceGraphics();
+        initRuleNames();
 
-        mRedDices = new SparseIntArray(6);
-        mRedDices.put(1, R.drawable.red1);
-        mRedDices.put(2, R.drawable.red2);
-        mRedDices.put(3, R.drawable.red3);
-        mRedDices.put(4, R.drawable.red4);
-        mRedDices.put(5, R.drawable.red5);
-        mRedDices.put(6, R.drawable.red6);
-
-        mRuleNames = new HashMap<>();
-        String[] values = getResources().getStringArray(R.array.rule_array); //TODO: Check if get().get() is unnecessary
-        for(int i = 0; i < 10; i++){
-            mRuleNames.put(values[i], i);
-        }
 
         mGame = new Game();
         if (savedInstanceState != null) {
@@ -207,6 +189,33 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    private void initDiceGraphics(){
+        mWhiteDices = new SparseIntArray(6);
+        mWhiteDices.put(1, R.drawable.white1);
+        mWhiteDices.put(2, R.drawable.white2);
+        mWhiteDices.put(3, R.drawable.white3);
+        mWhiteDices.put(4, R.drawable.white4);
+        mWhiteDices.put(5, R.drawable.white5);
+        mWhiteDices.put(6, R.drawable.white6);
+
+        mRedDices = new SparseIntArray(6);
+        mRedDices.put(1, R.drawable.red1);
+        mRedDices.put(2, R.drawable.red2);
+        mRedDices.put(3, R.drawable.red3);
+        mRedDices.put(4, R.drawable.red4);
+        mRedDices.put(5, R.drawable.red5);
+        mRedDices.put(6, R.drawable.red6);
+
+    }
+
+    private void initRuleNames(){
+        mRuleNames = new HashMap<>();
+        String[] values = getResources().getStringArray(R.array.rule_array);
+        for(int i = 0; i < 10; i++){
+            mRuleNames.put(values[i], i);
+        }
+    }
+
     private void markDice(int dice)
     {
         if(mGame.getRerollsLeft() > 0) {
@@ -225,7 +234,6 @@ public class GameActivity extends AppCompatActivity {
             }
 
         }
-        // TODO: Maybe toast "no rerolls left" in else branch
     }
 
     private void updateAllDice(){
